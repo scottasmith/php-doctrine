@@ -1,0 +1,24 @@
+{
+    "name": "scottsmith/doctrine",
+    "type": "library",
+    "description": "Doctrine helpers",
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "doctrine/inflector": "^1.4",
+        "doctrine/orm": "^2.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "ScottSmith\\Doctrine\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ScottSmith\\Doctrine\\Integration\\Laravel\\EntityServiceProvider",
+                "ScottSmith\\Doctrine\\Integration\\Laravel\\QueueServiceProvider"
+            ]
+        }
+    }
+}
