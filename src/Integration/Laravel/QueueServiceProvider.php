@@ -20,7 +20,7 @@ class QueueServiceProvider extends ServiceProviderAlias
         /** @var QueueManager */
         $queueManager = $this->app->get(QueueManager::class);
         $queueManager->before(function (JobProcessing $event) use ($em) {
-            $em->getConnection()->connect();
+            $em->getDoctrineConnection()->connect();
         });
     }
 }

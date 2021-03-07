@@ -9,7 +9,7 @@ use Doctrine\DBAL\Connection;
 /**
  * Database Helpers. Purposefully leaving out the PHPDoc for exceptions
  *
- * @method Connection getConnection
+ * @method Connection getDoctrineConnection
  */
 trait DatabaseHelperTrait
 {
@@ -20,7 +20,7 @@ trait DatabaseHelperTrait
      */
     protected function insertDoctrineRow(string $table, array $data)
     {
-        return $this->getConnection()->insert($table, $data);
+        return $this->getDoctrineConnection()->insert($table, $data);
     }
 
     /**
@@ -32,7 +32,7 @@ trait DatabaseHelperTrait
         [$query, $params] = $this->selectFromDoctrine($table, $queryParams);
 
         $this->assertNotFalse(
-            $this->getConnection()->fetchAssociative(implode(' AND ', $query), $params),
+            $this->getDoctrineConnection()->fetchAssociative(implode(' AND ', $query), $params),
             'Failed to assert row is in database'
         );
     }
@@ -46,7 +46,7 @@ trait DatabaseHelperTrait
         [$query, $params] = $this->selectFromDoctrine($table, $queryParams);
 
         $this->assertFalse(
-            $this->getConnection()->fetchAssociative(implode(' AND ', $query), $params),
+            $this->getDoctrineConnection()->fetchAssociative(implode(' AND ', $query), $params),
             'Failed to assert row is not in database'
         );
     }
@@ -62,7 +62,7 @@ trait DatabaseHelperTrait
 
         $this->assertSame(
             $count,
-            $this->getConnection()->executeQuery(implode(' AND ', $query), $params)->rowCount(),
+            $this->getDoctrineConnection()->executeQuery(implode(' AND ', $query), $params)->rowCount(),
             'Failed to assert row is not in database'
         );
     }
@@ -78,7 +78,7 @@ trait DatabaseHelperTrait
 
         $this->assertNotSame(
             $count,
-            $this->getConnection()->executeQuery(implode(' AND ', $query), $params)->rowCount(),
+            $this->getDoctrineConnection()->executeQuery(implode(' AND ', $query), $params)->rowCount(),
             'Failed to assert row is not in database'
         );
     }
@@ -90,7 +90,7 @@ trait DatabaseHelperTrait
      */
     private function selectFromDoctrine(string $table, array $queryParams)
     {
-        $connection = $this->getConnection();
+        $connection = $this->getDoctrineConnection();
         $query = [sprintf('SELECT * FROM %s WHERE 1', $connection->quoteIdentifier($table))];
         $params = [];
 

@@ -23,7 +23,7 @@ trait TestConnectionProviderTrait
      * @param string|null $connection
      * @return EntityManagerInterface
      */
-    public function getEntityManager($connection = null): EntityManagerInterface
+    public function getDoctrineEntityManager($connection = null): EntityManagerInterface
     {
         if (!$this->entityManagerCache) {
             if (!$connection) {
@@ -42,8 +42,8 @@ trait TestConnectionProviderTrait
      * @param string|null $connection
      * @return Connection
      */
-    public function getConnection($connection = null): Connection
+    public function getDoctrineConnection($connection = null): Connection
     {
-        return $this->getEntityManager($connection)->getConnection();
+        return $this->getDoctrineEntityManager($connection)->getConnection();
     }
 }

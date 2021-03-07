@@ -18,8 +18,8 @@ trait DatabaseTransactionTrait
     public function setUpTransaction()
     {
         $groups = $this->getGroups();
-        if (in_array('Integration', $groups) && method_exists($this, 'getConnection')) {
-            $this->getConnection()->beginTransaction();
+        if (in_array('Integration', $groups) && method_exists($this, 'getDoctrineConnection')) {
+            $this->getDoctrineConnection()->beginTransaction();
         }
     }
 
@@ -31,8 +31,8 @@ trait DatabaseTransactionTrait
     public function tearDownTransaction()
     {
         $groups = $this->getGroups();
-        if (in_array('Integration', $groups) && method_exists($this, 'getConnection')) {
-            $this->getConnection()->rollback();
+        if (in_array('Integration', $groups) && method_exists($this, 'getDoctrineConnection')) {
+            $this->getDoctrineConnection()->rollback();
         }
     }
 }

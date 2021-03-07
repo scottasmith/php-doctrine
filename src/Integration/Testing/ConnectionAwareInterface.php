@@ -12,5 +12,5 @@ interface ConnectionAwareInterface
      * @param null $connection
      * @return Connection
      */
-    public function getConnection($connection = null): Connection;
+    public function getDoctrineConnection($connection = null): Connection;
 }
