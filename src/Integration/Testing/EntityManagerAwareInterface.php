@@ -8,5 +8,5 @@ use Doctrine\ORM\EntityManagerInterface;
 
 interface EntityManagerAwareInterface
 {
-    public function getEntityManager() : EntityManagerInterface;
+    public function getDoctrineEntityManager() : EntityManagerInterface;
 }
