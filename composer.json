@@ -5,14 +5,15 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-json": "*",
-        "doctrine/inflector": "^1.4",
-        "doctrine/orm": "^2.7"
+        "doctrine/orm": "^2.8"
     },
+
     "autoload": {
         "psr-4": {
             "ScottSmith\\Doctrine\\": "src/"
         }
     },
+
     "extra": {
         "laravel": {
             "providers": [
