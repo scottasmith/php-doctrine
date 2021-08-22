@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This assumes that the current directory in getcwd() is the base directory for the application
+ */
+
+if ($argc < 2) {
+    echo "\n \033[41m\033[1;37mPlease specify configuration directory\033[0m\n\n";
+    echo " \033[1;37mUsage:\033[0m $argv[0] config/autoload\n\n";
+    exit;
+}
+
+$rootDirectory = getcwd();
+$configDirectory = implode('/', [$rootDirectory, $argv[1]]);
+
+$cliConfig = $rootDirectory . '/cli-config.php';
+$doctrineConfig = $configDirectory . '/doctrine.php';
+
+copy(__DIR__ . '/cli-config.php', $cliConfig);
+copy(__DIR__ . '/config.php', $doctrineConfig);
+
+echo "\n \033[1;37mCopied:\033[0m cli-config.php -> $cliConfig\n";
+echo " \033[1;37mCopied:\033[0m config.php -> $doctrineConfig\n\n";
+
+echo " You now need to add the Config provider to your Laminas ConfigAggregator\n";
+echo "   \033[1;37mScottSmith\Doctrine\Integrations\Laminas\ConfigProvider\033[0m\n\n";

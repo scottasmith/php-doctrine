@@ -10,6 +10,16 @@ Laravel bootstraps this package.
 You need to publish the configuration using `php artisan vendor:publish`.
 You can then configure `config/doctrine.php` or use the `.env` file.
  
+# Mezzio Integration
+Mezzio uses the ConfigProvider in this integration.
+
+You need to publish the configuration using:
+```
+$ php vendor/scottsmith/doctrine/src/Integration/Laminas/deploy-mezzio-doctrine-config config/autoload
+```
+
+You can then configure `config/autoload/doctrine.php` or use the `.env` file.
+
 # PHPUnit
 To enable testing with this doctrine module you will need to add this to `phpunit.xml`. This will enable migrations.
 ```
@@ -27,7 +37,7 @@ This example shows the usage of `TestConnectionProviderTrait` in the Laravel int
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use ScottSmith\Doctrine\Integration\Laravel\TestConnectionProviderTrait;
+use ScottSmith\Doctrine\Integration\<Laravel/Laminas>\TestConnectionProviderTrait;
 use ScottSmith\Doctrine\Integration\Testing\ConnectionAwareInterface;
 use ScottSmith\Doctrine\Integration\Testing\EntityManagerAwareInterface;
 

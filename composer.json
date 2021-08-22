@@ -13,7 +13,9 @@
             "ScottSmith\\Doctrine\\": "src/"
         }
     },
-
+ 
+    "bin": ["src/Integration/Mezzio/deploy-mezzio-doctrine-config"],
+ 
     "extra": {
         "laravel": {
             "providers": [
