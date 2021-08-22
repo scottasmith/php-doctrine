@@ -13,10 +13,14 @@
             "ScottSmith\\Doctrine\\": "src/"
         }
     },
- 
+
     "bin": ["src/Integration/Mezzio/deploy-mezzio-doctrine-config"],
- 
+
     "extra": {
+        "laminas": {
+            "config-provider": "ScottSmith\\Doctrine\\Integrations\\Laminas\\ConfigProvider"
+        },
+
         "laravel": {
             "providers": [
                 "ScottSmith\\Doctrine\\Integration\\Laravel\\EntityServiceProvider",

@@ -27,23 +27,15 @@ class ConfigurationValidator
                 throw new ConfigurationException("Doctrine driver is not a string in connection ${name}");
             }
 
-            if (empty($connection['host'])) {
+            if (!isset($connection['host']) || empty($connection['host'])) {
                 throw new ConfigurationException("Doctrine host is missing or invalid in connection ${name}");
             }
 
-            if (empty($connection['username'])) {
+            if (!isset($connection['username']) ||empty($connection['username'])) {
                 throw new ConfigurationException("Doctrine username is missing or invalid in connection ${name}");
             }
 
-            if (empty($connection['password'])) {
-                throw new ConfigurationException("Doctrine password is missing or invalid in connection ${name}");
-            }
-
-            if (empty($connection['database'])) {
-                throw new ConfigurationException("Doctrine database is missing or invalid in connection ${name}");
-            }
-
-            if (empty($connection['port']) || !is_numeric($connection['port'])) {
+            if (!isset($connection['port']) || !is_numeric($connection['port'])) {
                 throw new ConfigurationException("Doctrine port is missing or invalid in connection ${name}");
             }
 

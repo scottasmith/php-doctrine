@@ -15,13 +15,6 @@ use ScottSmith\Doctrine\Exception\ConnectionNotFoundException;
 class EntityManagerProvider
 {
     /**
-     * ConnectionInterface configuration
-     *
-     * @var array
-     */
-    private array $configuration;
-
-    /**
      * Cached connections
      *
      * @var array
@@ -29,32 +22,20 @@ class EntityManagerProvider
     private array $connections = [];
 
     /**
-     * @var DependencyResolverInterface|null
-     */
-    private ?DependencyResolverInterface $resolver;
-
-    /**
      * @param ConfigurationInterface $configuration
      * @param DependencyResolverInterface|null $resolver = null
      * @throws Exception\ConfigurationException
      */
-    public function __construct(ConfigurationInterface $configuration, ?DependencyResolverInterface $resolver = null)
-    {
-        $this->configuration = $configuration->getConfiguration();
-        $this->resolver = $resolver;
-
-        ConfigurationValidator::validateConnections($this->configuration);
+    public function __construct(
+        private ConfigurationInterface $configuration,
+        private ?DependencyResolverInterface $resolver = null
+    ) {
+        ConfigurationValidator::validateConnections($this->configuration->getConfiguration());
     }
 
-    /**
-     * @throws ConnectionNotFoundException
-     * @throws ORMException
-     */
-    public function registerAll(): array
+    public function getConfiguration(): ConfigurationInterface
     {
-        foreach ($this->configuration['connections'] as $name => $config) {
-            $this->get($name);
-        }
+        return $this->configuration;
     }
 
     /**
@@ -69,16 +50,18 @@ class EntityManagerProvider
             $name = 'default';
         }
 
-        if (!isset($this->configuration['connections'][$name])) {
+        $configuration = $this->configuration->getConfiguration();
+
+        if (!isset($configuration['connections'][$name])) {
             throw new ConnectionNotFoundException($name);
         }
 
-        $connectionConfig = $this->configuration['connections'][$name];
+        $connectionConfig = $configuration['connections'][$name];
 
         $config = Setup::createAnnotationMetadataConfiguration(
             $connectionConfig['paths'],
-            empty($this->configuration['proxies']),
-            empty($this->configuration['proxies']) ? null : $this->configuration['proxies'],
+            empty($configuration['proxies']),
+            empty($configuration['proxies']) ? null : $configuration['proxies'],
             null,
             false
         );
@@ -111,6 +94,7 @@ class EntityManagerProvider
      */
     public function exists(string $name): bool
     {
-        return isset($this->configuration['connections'][$name]);
+        $configuration = $this->configuration->getConfiguration();
+        return isset($configuration['connections'][$name]);
     }
 }

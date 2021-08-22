@@ -10,18 +10,29 @@ use ScottSmith\Doctrine\Exception\ConfigurationException;
 class Configuration implements ConfigurationInterface
 {
     /**
+     * @param array|null $config
+     */
+    public function __construct(private ?array $config = null)
+    {
+    }
+
+    /**
      * @inheritDoc
      * @throws ConfigurationException
      */
     public function getConfiguration(): array
     {
-        $configPath = $this->getConfigPath();
+        if (!$this->config) {
+            $configPath = $this->getConfigPath();
 
-        if (!is_file($configPath) || !is_readable($configPath)) {
-            throw new ConfigurationException("Configuration file ${$configPath} not readable");
+            if (!is_file($configPath) || !is_readable($configPath)) {
+                throw new ConfigurationException("Configuration file ${$configPath} not readable");
+            }
+
+            $this->config = require($configPath);
         }
 
-        return require($configPath)['doctrine'] ?? [];
+        return $this->config;
     }
 
     /**

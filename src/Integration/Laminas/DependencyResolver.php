@@ -19,7 +19,7 @@ class DependencyResolver implements DependencyResolverInterface
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->app = $app;
+        $this->container = $container;
     }
 
     /**

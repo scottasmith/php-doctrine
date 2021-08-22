@@ -14,6 +14,6 @@ class EntityManagerFactory
     {
         $manager = $container->get(EntityManagerProvider::class);
 
-        return $managers->get($configuration->getDefault());
+        return $manager->get($manager->getConfiguration()->getDefault());
     }
 }
