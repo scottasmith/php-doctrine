@@ -24,4 +24,4 @@ echo "\n \033[1;37mCopied:\033[0m cli-config.php -> $cliConfig\n";
 echo " \033[1;37mCopied:\033[0m config.php -> $doctrineConfig\n\n";
 
 echo " You now need to add the Config provider to your Laminas ConfigAggregator\n";
-echo "   \033[1;37mScottSmith\Doctrine\Integrations\Laminas\ConfigProvider\033[0m\n\n";
+echo "   \033[1;37mScottSmith\Doctrine\Integration\Laminas\ConfigProvider\033[0m\n\n";
