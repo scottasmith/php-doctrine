@@ -11,14 +11,14 @@ use ScottSmith\Doctrine\Integration\Laminas\Container\EntityManagerProviderFacto
 
 class ConfigProvider
 {
-    public function __invoke()
+    public function __invoke(): array
     {
         return [
             'dependencies' => [
                 'factories' => [
                     EntityManagerProvider::class => EntityManagerProviderFactory::class,
 
-                    EntityManagerInterface::clss => EntityManagerFactory::class,
+                    EntityManagerInterface::class => EntityManagerFactory::class,
                 ],
             ],
         ];
