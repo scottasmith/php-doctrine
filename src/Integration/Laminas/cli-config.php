@@ -1,10 +1,10 @@
 <?php
 
 use ScottSmith\Doctrine\ConfigurationFactory;
-use ScottSmith\Doctrine\Integration\Laravel\Configuration;
+use ScottSmith\Doctrine\Integration\Laminas\Configuration;
 
 require_once "vendor/autoload.php";
 
 return $_SERVER['argv'][0] === 'vendor/bin/doctrine-migrations' ?
-    Configuration::forMigrations(new Configuration()):
-    Configuration::forEntityManager(new Configuration());
+    ConfigurationFactory::forMigrations(new Configuration()):
+    ConfigurationFactory::forEntityManager(new Configuration());
