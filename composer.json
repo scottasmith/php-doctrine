@@ -15,7 +15,7 @@
         }
     },
 
-    "bin": ["src/Integration/Mezzio/deploy-mezzio-doctrine-config"],
+    "bin": ["src/Integration/Laminas/deploy-mezzio-doctrine-config"],
 
     "extra": {
         "laminas": {
