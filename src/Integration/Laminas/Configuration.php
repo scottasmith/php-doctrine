@@ -29,7 +29,8 @@ class Configuration implements ConfigurationInterface
                 throw new ConfigurationException("Configuration file ${$configPath} not readable");
             }
 
-            $this->config = require($configPath);
+            $config = require($configPath);
+            $this->config = $config['doctrine'];
         }
 
         return $this->config;
