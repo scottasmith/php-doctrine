@@ -14,6 +14,11 @@ class QueueServiceProvider extends ServiceProviderAlias
 {
     public function boot()
     {
+        if (!$this->app->has(EntityManagerInterface::class)) {
+            // Cannot get EntityManagerInterface. Possibly because doctrine.php doesn't exist
+            return;
+        }
+
         /** @var EntityManagerInterface $em */
         $em = $this->app->get(EntityManagerInterface::class);
 
