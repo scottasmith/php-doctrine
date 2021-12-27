@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ScottSmith\Doctrine;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
