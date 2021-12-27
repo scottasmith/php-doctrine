@@ -58,13 +58,13 @@ class EntityManagerProvider
 
         $connectionConfig = $configuration['connections'][$name];
 
-        $config = Setup::createAnnotationMetadataConfiguration(
-            $connectionConfig['paths'],
+        $config = Setup::createConfiguration(
             empty($configuration['proxies']),
             empty($configuration['proxies']) ? null : $configuration['proxies'],
-            null,
-            false
+            null
         );
+
+        $config->setMetadataDriverImpl(new AttributeDriver($connectionConfig['paths']));
 
         if (!empty($connectionConfig['cache'])) {
             $config->setQueryCacheImpl($connectionConfig['cache']);
