@@ -5,8 +5,8 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "doctrine/orm": "^2.8",
-        "doctrine/migrations": "^3.2"
+        "doctrine/orm": "^2.10",
+        "doctrine/migrations": "^3.3"
     },
 
     "autoload": {
