@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
+use ScottSmith\Doctrine\Caching\DoctrineCachingProviderInterface;
 use ScottSmith\Doctrine\Configuration\ConfigurationInterface;
 use ScottSmith\Doctrine\Configuration\ConfigurationValidator;
 use ScottSmith\Doctrine\Exception\ConnectionNotFoundException;
@@ -62,13 +63,16 @@ class EntityManagerProvider
         $config = Setup::createConfiguration(
             empty($configuration['proxies']),
             empty($configuration['proxies']) ? null : $configuration['proxies'],
-            null
+            $configuration['cache'] ?? null
         );
 
         $config->setMetadataDriverImpl(new AttributeDriver($connectionConfig['paths']));
 
-        if (!empty($connectionConfig['cache'])) {
-            $config->setQueryCacheImpl($connectionConfig['cache']);
+        if (!empty($configuration['cache'])) {
+            $config->setQueryCacheImpl($configuration['cache'] instanceof DoctrineCachingProviderInterface
+                ? $configuration['cache']->getCachingProvider()
+                : $configuration['cache']
+            );
         }
 
         if ($this->resolver && !empty($connectionConfig['logger'])) {

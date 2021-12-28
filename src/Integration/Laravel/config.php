@@ -28,6 +28,10 @@ return [
         ],
     ],
 
-    // This is used by the doctrine commands so can't use laravel to locate the database directory
-    'proxies' => getcwd() . '/database/proxies',
+    'cache' => (env('APP_ENV') == 'production')
+        ? new \ScottSmith\Doctrine\Caching\FilesystemCachingProvider(dirname(__DIR__) . '/storage/doctrine/cache')
+        : null,
+
+    'proxies' => (env('APP_ENV') === 'production') ? dirname(__DIR__) . '/storage/doctrine/proxies' : null,
 ];
+
