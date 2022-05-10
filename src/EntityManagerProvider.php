@@ -60,20 +60,17 @@ class EntityManagerProvider
 
         $connectionConfig = $configuration['connections'][$name];
 
+        $cache = $configuration['cache'] instanceof DoctrineCachingProviderInterface
+            ? $configuration['cache']->getCachingProvider()
+            : $configuration['cache'];
+
         $config = Setup::createConfiguration(
             empty($configuration['proxies']),
             empty($configuration['proxies']) ? null : $configuration['proxies'],
-            $configuration['cache'] ?? null
+            $cache ?? null
         );
 
         $config->setMetadataDriverImpl(new AttributeDriver($connectionConfig['paths']));
-
-        if (!empty($configuration['cache'])) {
-            $config->setQueryCacheImpl($configuration['cache'] instanceof DoctrineCachingProviderInterface
-                ? $configuration['cache']->getCachingProvider()
-                : $configuration['cache']
-            );
-        }
 
         if ($this->resolver && !empty($connectionConfig['logger'])) {
             $config->setSQLLogger($this->resolver->get($connectionConfig['logger']));
@@ -86,7 +83,7 @@ class EntityManagerProvider
                 'user' => $connectionConfig['username'],
                 'password' => $connectionConfig['password'],
                 'host' => $connectionConfig['host'],
-            ],
+            ] + $connectionConfig,
             $config
         );
 

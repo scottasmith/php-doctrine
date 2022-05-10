@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Doctrine helpers",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-json": "*",
         "doctrine/orm": "^2.10",
         "doctrine/migrations": "^3.3"
