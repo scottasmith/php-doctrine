@@ -55,7 +55,7 @@ class EntityManagerProvider
     public function get(string $name = null): EntityManager
     {
         // Do we have a cache version?
-        if ($this->connections[$name]) {
+        if (isset($this->connections[$name])) {
             return $this->connections[$name];
         }
 
