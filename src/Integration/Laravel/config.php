@@ -28,10 +28,14 @@ return [
         ],
     ],
 
+    'types' => [
+        // \Ramsey\Uuid\Doctrine\UuidType::NAME => \Ramsey\Uuid\Doctrine\UuidType::class,
+    ],
+
     'cache' => (env('APP_ENV') == 'production')
-        ? new \ScottSmith\Doctrine\Caching\FilesystemCachingProvider(dirname(__DIR__) . '/storage/doctrine/cache')
+        ? new \ScottSmith\Doctrine\Caching\FilesystemCachingProvider(getcwd() . '/storage/doctrine/cache')
         : null,
 
-    'proxies' => (env('APP_ENV') === 'production') ? dirname(__DIR__) . '/storage/doctrine/proxies' : null,
+    // This is used by the doctrine commands so can't use laravel to locate the database directory
+    'proxies' => (env('APP_ENV') === 'production') ? (getcwd() . '/storage/doctrine/proxies') : null,
 ];
-

@@ -29,7 +29,15 @@ return [
             ],
         ],
 
+        'types' => [
+            // \Ramsey\Uuid\Doctrine\UuidType::NAME => \Ramsey\Uuid\Doctrine\UuidType::class,
+        ],
+
+        'cache' => (env('APP_ENV') == 'production')
+            ? new \ScottSmith\Doctrine\Caching\FilesystemCachingProvider(dirname(__DIR__) . '/storage/doctrine/cache')
+            : null,
+
         // This is used by the doctrine commands so can't use laravel to locate the database directory
-        'proxies' => getcwd() . '/database/proxies',
+        'proxies' => (env('APP_ENV') == 'production') ? (getcwd() . '/database/proxies') : null,
     ],
 ];

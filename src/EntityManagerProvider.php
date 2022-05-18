@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ScottSmith\Doctrine;
 
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\ORM\ORMException;
@@ -22,6 +23,11 @@ class EntityManagerProvider
      * @var array
      */
     private array $connections = [];
+
+    /**
+     * @var bool
+     */
+    static private bool $typesInitialised = false;
 
     /**
      * @param ConfigurationInterface $configuration
@@ -48,11 +54,21 @@ class EntityManagerProvider
      */
     public function get(string $name = null): EntityManager
     {
+        // Do we have a cache version?
+        if ($this->connections[$name]) {
+            return $this->connections[$name];
+        }
+
         if (null === $name) {
             $name = 'default';
         }
 
         $configuration = $this->configuration->getConfiguration();
+
+        if (!self::$typesInitialised && is_array($configuration['types'])) {
+            $this->registerTypes($configuration['types']);
+            self::$typesInitialised = true;
+        }
 
         if (!isset($configuration['connections'][$name])) {
             throw new ConnectionNotFoundException($name);
@@ -98,5 +114,14 @@ class EntityManagerProvider
     {
         $configuration = $this->configuration->getConfiguration();
         return isset($configuration['connections'][$name]);
+    }
+
+    private function registerTypes(array $types)
+    {
+        foreach ($types as $typeName => $class) {
+            if (is_string($typeName) && is_string($class)) {
+                Type::addType($typeName, $class);
+            }
+        }
     }
 }
