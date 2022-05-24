@@ -71,7 +71,7 @@ class EntityManagerProvider
         }
 
         if (!isset($configuration['connections'][$name])) {
-            throw new ConnectionNotFoundException($name);
+            throw ConnectionNotFoundException::forName($name);
         }
 
         $connectionConfig = $configuration['connections'][$name];
