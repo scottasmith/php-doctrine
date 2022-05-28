@@ -91,7 +91,7 @@ trait DatabaseHelperTrait
     protected function fetchFromDoctrine(string $table, $queryParams)
     {
         [$query, $params] = $this->selectFromDoctrine($table, $queryParams);
-        return $this->getDoctrineConnection()->fetchAssoc(implode(' AND ', $query), $params);
+        return $this->getDoctrineConnection()->fetchAssociative(implode(' AND ', $query), $params);
     }
 
     /**
