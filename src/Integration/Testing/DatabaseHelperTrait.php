@@ -88,7 +88,7 @@ trait DatabaseHelperTrait
      * @param array $queryParams
      * @return array[]
      */
-    private function selectFromDoctrine(string $table, array $queryParams)
+    protected function selectFromDoctrine(string $table, array $queryParams)
     {
         $connection = $this->getDoctrineConnection();
         $query = [sprintf('SELECT * FROM %s WHERE 1', $connection->quoteIdentifier($table))];
