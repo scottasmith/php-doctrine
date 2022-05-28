@@ -85,10 +85,21 @@ trait DatabaseHelperTrait
 
     /**
      * @param string $table
+     * @param $queryParams
+     * @return array
+     */
+    protected function fetchFromDoctrine(string $table, $queryParams)
+    {
+        [$query, $params] = $this->selectFromDoctrine($table, $queryParams);
+        return $this->getDoctrineConnection()->executeQuery(implode(' AND ', $query), $params);
+    }
+
+    /**
+     * @param string $table
      * @param array $queryParams
      * @return array[]
      */
-    protected function selectFromDoctrine(string $table, array $queryParams)
+    private function selectFromDoctrine(string $table, array $queryParams)
     {
         $connection = $this->getDoctrineConnection();
         $query = [sprintf('SELECT * FROM %s WHERE 1', $connection->quoteIdentifier($table))];
